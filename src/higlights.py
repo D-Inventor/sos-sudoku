@@ -8,10 +8,10 @@ class FieldPointer:
 
     def getBefore(self, cell: Cell, position: tuple[int,int]):
         if position == self._position:
-            return colored(">", "blue")
+            return colored(">", "light_green")
         return None
     
     def getAfter(self, cell: Cell, position: tuple[int,int]):
         if (position == self._position):
-            return colored("<", "blue")
+            return colored("<", "light_green")
         return None
