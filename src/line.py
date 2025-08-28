@@ -19,6 +19,10 @@ class Line(CellCollection):
     def cells(self):
         return list(self._cells.values())
     
+    @property
+    def index(self):
+        return self._index
+    
 class Row(Line):
     def localToGlobal(self, x:int) -> tuple[int,int]:
         return (x, self._index)
