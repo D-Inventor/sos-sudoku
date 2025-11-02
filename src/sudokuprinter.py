@@ -7,8 +7,8 @@ sudokuTop = "┏━━━━━━━┳━━━━━━━┳━━━━━�
 sudokuMiddle = "┣━━━━━━━╋━━━━━━━╋━━━━━━━┫"
 sudokuBottom = "┗━━━━━━━┻━━━━━━━┻━━━━━━━┛"
 
-def printSudoku(sudoku: Sudoku, highlights:list[FieldPointer]) -> str:
 
+def printSudoku(sudoku: Sudoku, highlights: list[FieldPointer]) -> str:
     result = sudokuTop + "\n"
     for y in range(1, 10):
         result = result + printSudokuRow(sudoku.getrow(y), y, highlights) + "\n"
@@ -17,6 +17,7 @@ def printSudoku(sudoku: Sudoku, highlights:list[FieldPointer]) -> str:
 
     result = result + sudokuBottom
     return result
+
 
 # def printSudokuRow(row: Row):
 #     result:str = ""
@@ -27,8 +28,9 @@ def printSudoku(sudoku: Sudoku, highlights:list[FieldPointer]) -> str:
 #     result = result + "┃\n"
 #     return result
 
-def printSudokuRow(row: Row, y:int, highlight:list[FieldPointer]):
-    result:str = ""
+
+def printSudokuRow(row: Row, y: int, highlight: list[FieldPointer]):
+    result: str = ""
     for x in range(1, 10):
         cell = row.get(x)
         position = (x, y)
@@ -41,17 +43,51 @@ def printSudokuRow(row: Row, y:int, highlight:list[FieldPointer]):
     result = result + "┃"
     return result
 
-def printSudokuBeforeCell(cell: Cell, position: tuple[int,int], highlights:list[FieldPointer]):
+
+def printSudokuBeforeCell(
+    cell: Cell, position: tuple[int, int], highlights: list[FieldPointer]
+):
     (x, y) = position
     value = None
-    if x%3 != 1:
-        value = next((val for val in [highlight.getAfter(cell, (x - 1, y)) for highlight in highlights] if val is not None), None)
+    if x % 3 != 1:
+        value = next(
+            (
+                val
+                for val in [
+                    highlight.getAfter(cell, (x - 1, y)) for highlight in highlights
+                ]
+                if val is not None
+            ),
+            None,
+        )
     if value is None:
-        value = next((val for val in [highlight.getBefore(cell, position) for highlight in highlights] if val is not None), None)
+        value = next(
+            (
+                val
+                for val in [
+                    highlight.getBefore(cell, position) for highlight in highlights
+                ]
+                if val is not None
+            ),
+            None,
+        )
     return value if value is not None else " "
 
-def printSudokuCell(cell: Cell, position: tuple[int,int], highlight:list[FieldPointer]) -> str:
+
+def printSudokuCell(
+    cell: Cell, position: tuple[int, int], highlight: list[FieldPointer]
+) -> str:
     return " " if isinstance(cell, EmptyCell) else str(cell.value)
 
-def printSudokuAfterCell(cell: Cell, position: tuple[int,int], highlights:list[FieldPointer]):
-    return next((val for val in [highlight.getAfter(cell, position) for highlight in highlights] if val is not None), " ")
+
+def printSudokuAfterCell(
+    cell: Cell, position: tuple[int, int], highlights: list[FieldPointer]
+):
+    return next(
+        (
+            val
+            for val in [highlight.getAfter(cell, position) for highlight in highlights]
+            if val is not None
+        ),
+        " ",
+    )
