@@ -1,3 +1,5 @@
+"""Module for finding cells in a Sudoku puzzle that can be filled."""
+
 import itertools
 
 from src.block import Block
@@ -7,6 +9,7 @@ from src.sudoku import Sudoku
 
 
 def find_cells_with_single_option(sudoku: Sudoku) -> list[tuple[int, int]]:
+    """Finds all cells in the Sudoku puzzle that have only one possible number."""
     return [
         position
         for position, cell in sudoku.cells
@@ -15,10 +18,12 @@ def find_cells_with_single_option(sudoku: Sudoku) -> list[tuple[int, int]]:
 
 
 def cell_has_one_possible_number(cell: Cell) -> bool:
+    """Checks if a cell has only one possible number."""
     return isinstance(cell, EmptyCell) and len(cell.possible_numbers) == 1
 
 
 def find_cells_with_unique_number_in_rows(sudoku: Sudoku) -> list[tuple[int, int]]:
+    """Finds all cells that have a unique possible number in their row."""
     return [
         position
         for y in range(1, 10)
@@ -27,12 +32,14 @@ def find_cells_with_unique_number_in_rows(sudoku: Sudoku) -> list[tuple[int, int
 
 
 def find_cells_with_unique_number_in_single_row(row: Row) -> list[tuple[int, int]]:
+    """Finds all cells that have a unique possible number in a single row."""
     return [
         row.local_to_global(x) for x in find_indexes_for_unique_numbers_in_line(row)
     ]
 
 
 def find_cells_with_unique_number_in_columns(sudoku: Sudoku) -> list[tuple[int, int]]:
+    """Finds all cells that have a unique possible number in their column."""
     return [
         position
         for x in range(1, 10)
@@ -45,6 +52,7 @@ def find_cells_with_unique_number_in_columns(sudoku: Sudoku) -> list[tuple[int, 
 def find_cells_with_unique_number_in_single_column(
     column: Column,
 ) -> list[tuple[int, int]]:
+    """Finds all cells that have a unique possible number in a single column."""
     return [
         column.local_to_global(y)
         for y in find_indexes_for_unique_numbers_in_line(column)
@@ -52,6 +60,7 @@ def find_cells_with_unique_number_in_single_column(
 
 
 def find_indexes_for_unique_numbers_in_line(line: Line) -> list[int]:
+    """Finds indexes of cells that have a unique possible number in a line."""
     numbers = {key: [] for key in range(1, 10)}
     for index, cell in [(index, line.get(index)) for index in range(1, 10)]:
         if isinstance(cell, EmptyCell):
@@ -67,6 +76,7 @@ def find_indexes_for_unique_numbers_in_line(line: Line) -> list[int]:
 
 
 def find_cells_with_unique_number_in_blocks(sudoku: Sudoku) -> list[tuple[int, int]]:
+    """Finds all cells that have a unique possible number in their block."""
     return [
         position
         for (x, y) in itertools.product(range(1, 4), range(1, 4))
@@ -79,6 +89,7 @@ def find_cells_with_unique_number_in_blocks(sudoku: Sudoku) -> list[tuple[int, i
 def find_cells_with_unique_number_in_single_block(
     block: Block,
 ) -> list[tuple[int, int]]:
+    """Finds all cells that have a unique possible number in a single block."""
     numbers = {key: [] for key in range(1, 10)}
     for x, y, cell in [
         (x, y, block.get(x, y))

@@ -1,3 +1,5 @@
+"""Main module of the Sudoku solver program."""
+
 from os import path
 
 from src.higlights import FieldPointer
@@ -17,7 +19,8 @@ from src.sudokuprinter import print_sudoku
 from src.sudokureader import sudoku_from_file
 
 
-def entrypoint() -> None:
+def main() -> None:
+    """Main function of the program."""
     sudoku = sudoku_from_file(path.join("puzzles", "13.txt"))
 
     old_sudoku = None
@@ -47,4 +50,4 @@ def entrypoint() -> None:
 
 
 if __name__ == "__main__":
-    entrypoint()
+    main()

@@ -1,3 +1,5 @@
+""" ""Module for printing Sudoku puzzles to the console."""
+
 from src.higlights import FieldPointer
 
 from .cell import Cell, EmptyCell
@@ -10,6 +12,7 @@ SUDOKU_BOTTOM = "┗━━━━━━━┻━━━━━━━┻━━━━
 
 
 def print_sudoku(sudoku: Sudoku, highlights: list[FieldPointer]) -> str:
+    """Prints the Sudoku puzzle as a string."""
     result = SUDOKU_TOP + "\n"
     for y in range(1, 10):
         result = result + print_sudoku_row(sudoku.getrow(y), y, highlights) + "\n"
@@ -20,17 +23,8 @@ def print_sudoku(sudoku: Sudoku, highlights: list[FieldPointer]) -> str:
     return result
 
 
-# def print_sudoku_row(row: Row):
-#     result:str = ""
-#     for i in range(0, 3):
-#         result = result + "┃ "
-#         for j in range(1, 4):
-#             result = result + print_sudoku_cell(row.get((i * 3) + j)) + " "
-#     result = result + "┃\n"
-#     return result
-
-
 def print_sudoku_row(row: Row, y: int, highlight: list[FieldPointer]) -> str:
+    """Prints a single row of the Sudoku puzzle as a string."""
     result: str = ""
     for x in range(1, 10):
         cell = row.get(x)
@@ -48,6 +42,7 @@ def print_sudoku_row(row: Row, y: int, highlight: list[FieldPointer]) -> str:
 def print_sudoku_before_cell(
     position: tuple[int, int], highlights: list[FieldPointer]
 ) -> str:
+    """Prints any highlight before a cell in the Sudoku puzzle as a string."""
     (x, y) = position
     value = None
     if x % 3 != 1:
@@ -72,12 +67,14 @@ def print_sudoku_before_cell(
 
 
 def print_sudoku_cell(cell: Cell) -> str:
+    """Prints a single cell of the Sudoku puzzle as a string."""
     return " " if isinstance(cell, EmptyCell) else str(cell.value)
 
 
 def print_sudoku_after_cell(
     position: tuple[int, int], highlights: list[FieldPointer]
 ) -> str:
+    """Prints any highlight after a cell in the Sudoku puzzle as a string."""
     return next(
         (
             val
