@@ -15,45 +15,47 @@ class Sudoku:
         return [(position, self._cells[position]) for position in self._cells]
 
     def set(self, x: int, y: int, number: int | Cell) -> "Sudoku":
-        ensurePositionInsideBounds(x, y)
+        ensure_position_inside_bounds(x, y)
 
-        number = ensureNumberIsCell(number)
+        number = ensure_number_is_cell(number)
 
         if isinstance(number, FullCell):
-            ensureNoCollisions(self, x, y, number)
+            ensure_no_collisions(self, x, y, number)
 
-        newInstance = self.copy()
+        new_instance = self.copy()
         if isinstance(number, FullCell):
-            newInstance._cells = newInstance._cells | self.eliminateRow(y, number.value)
-            newInstance._cells = newInstance._cells | self.eliminateColumn(
+            new_instance._cells = new_instance._cells | self.eliminate_row(
+                y, number.value
+            )
+            new_instance._cells = new_instance._cells | self.eliminate_column(
                 x, number.value
             )
-            newInstance._cells = newInstance._cells | self.eliminateBlock(
+            new_instance._cells = new_instance._cells | self.eliminate_block(
                 x, y, number.value
             )
 
-        newInstance._cells[(x, y)] = number
-        return newInstance
+        new_instance._cells[(x, y)] = number
+        return new_instance
 
-    def eliminateRow(self, y: int, number: int) -> dict[tuple[int, int], Cell]:
+    def eliminate_row(self, y: int, number: int) -> dict[tuple[int, int], Cell]:
         row = self.getrow(y)
-        rowCells = [(x, row.get(x)) for x in range(1, 10)]
+        row_cells = [(x, row.get(x)) for x in range(1, 10)]
         return {
             (x, y): cell.eliminate(number)
-            for x, cell in rowCells
+            for x, cell in row_cells
             if isinstance(cell, EmptyCell)
         }
 
-    def eliminateColumn(self, x: int, number: int) -> dict[tuple[int, int], Cell]:
+    def eliminate_column(self, x: int, number: int) -> dict[tuple[int, int], Cell]:
         column = self.getcolumn(x)
-        columnCells = [(y, column.get(y)) for y in range(1, 10)]
+        column_cells = [(y, column.get(y)) for y in range(1, 10)]
         return {
             (x, y): cell.eliminate(number)
-            for y, cell in columnCells
+            for y, cell in column_cells
             if isinstance(cell, EmptyCell)
         }
 
-    def eliminateBlock(
+    def eliminate_block(
         self, x: int, y: int, number: int
     ) -> dict[tuple[int, int], Cell]:
         block = self.getblockfromcell(x, y)
@@ -62,7 +64,7 @@ class Sudoku:
             for blockx, blocky in itertools.product(range(1, 4), range(1, 4))
         ]
         return {
-            block.localToGlobal(blockx, blocky): cell.eliminate(number)
+            block.local_to_global(blockx, blocky): cell.eliminate(number)
             for blockx, blocky, cell in cells
             if isinstance(cell, EmptyCell)
         }
@@ -81,16 +83,16 @@ class Sudoku:
         if y < 1 or y > 3:
             raise ValueError("y must be between 1 and 3")
 
-        minX = x * 3 - 2
-        minY = y * 3 - 2
-        maxX = minX + 3
-        maxY = minY + 3
+        min_x = x * 3 - 2
+        min_y = y * 3 - 2
+        max_x = min_x + 3
+        max_y = min_y + 3
         block = {
-            (x - minX + 1, y - minY + 1): self._cells[(x, y)]
+            (x - min_x + 1, y - min_y + 1): self._cells[(x, y)]
             for x, y in self._cells.keys()
-            if minX <= x < maxX and minY <= y < maxY
+            if min_x <= x < max_x and min_y <= y < max_y
         }
-        return Block((minX - 1, minY - 1), block)
+        return Block((min_x - 1, min_y - 1), block)
 
     def getblockfromcell(self, x: int, y: int) -> Block:
         blockx = ((x - 1) // 3) + 1
@@ -111,16 +113,16 @@ class Sudoku:
     def fromarray(input: list[list[int | None]]) -> "Sudoku":
         result = Sudoku.empty()
         for x, y in itertools.product(range(0, 9), range(0, 9)):
-            if inputIsNumber(input, x, y):
+            if input_is_number(input, x, y):
                 result = result.set(x + 1, y + 1, FullCell(input[y][x]))
         return result
 
 
-def inputIsNumber(input: list[list[int | None]], x: int, y: int) -> bool:
+def input_is_number(input: list[list[int | None]], x: int, y: int) -> bool:
     return len(input) > y and len(input[y]) > x and input[y][x] is not None
 
 
-def ensureNoCollisions(sudoku: Sudoku, x: int, y: int, number: FullCell) -> None:
+def ensure_no_collisions(sudoku: Sudoku, x: int, y: int, number: FullCell) -> None:
     if sudoku.getrow(y).contains(number.value):
         raise ValueError("Same number is already present in this row")
     if sudoku.getcolumn(x).contains(number.value):
@@ -129,23 +131,23 @@ def ensureNoCollisions(sudoku: Sudoku, x: int, y: int, number: FullCell) -> None
         raise ValueError("Same number is already present in this block")
 
 
-def ensureNumberIsCell(number: int | Cell) -> Cell:
+def ensure_number_is_cell(number: int | Cell) -> Cell:
     return FullCell(number) if isinstance(number, int) else number
 
 
-def ensurePositionInsideBounds(x: int, y: int) -> None:
-    ensureXInsideBounds(x)
-    ensureYInsideBounds(y)
+def ensure_position_inside_bounds(x: int, y: int) -> None:
+    ensure_x_inside_bounds(x)
+    ensure_y_inside_bounds(y)
 
 
-def ensureYInsideBounds(y: int) -> None:
-    ensureInsideBounds(y, "y must be between 1 and 9")
+def ensure_y_inside_bounds(y: int) -> None:
+    ensure_inside_bounds(y, "y must be between 1 and 9")
 
 
-def ensureXInsideBounds(x: int) -> None:
-    ensureInsideBounds(x, "x must be between 1 and 9")
+def ensure_x_inside_bounds(x: int) -> None:
+    ensure_inside_bounds(x, "x must be between 1 and 9")
 
 
-def ensureInsideBounds(number: int, errorMessage: str) -> None:
+def ensure_inside_bounds(number: int, error_message: str) -> None:
     if number > 9 or number < 1:
-        raise ValueError(errorMessage)
+        raise ValueError(error_message)

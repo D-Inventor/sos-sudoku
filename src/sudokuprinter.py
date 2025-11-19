@@ -4,49 +4,49 @@ from .cell import Cell, EmptyCell
 from .line import Row
 from .sudoku import Sudoku
 
-sudokuTop = "┏━━━━━━━┳━━━━━━━┳━━━━━━━┓"
-sudokuMiddle = "┣━━━━━━━╋━━━━━━━╋━━━━━━━┫"
-sudokuBottom = "┗━━━━━━━┻━━━━━━━┻━━━━━━━┛"
+SUDOKU_TOP = "┏━━━━━━━┳━━━━━━━┳━━━━━━━┓"
+SUDOKU_MIDDLE = "┣━━━━━━━╋━━━━━━━╋━━━━━━━┫"
+SUDOKU_BOTTOM = "┗━━━━━━━┻━━━━━━━┻━━━━━━━┛"
 
 
-def printSudoku(sudoku: Sudoku, highlights: list[FieldPointer]) -> str:
-    result = sudokuTop + "\n"
+def print_sudoku(sudoku: Sudoku, highlights: list[FieldPointer]) -> str:
+    result = SUDOKU_TOP + "\n"
     for y in range(1, 10):
-        result = result + printSudokuRow(sudoku.getrow(y), y, highlights) + "\n"
+        result = result + print_sudoku_row(sudoku.getrow(y), y, highlights) + "\n"
         if y < 9 and (y % 3) == 0:
-            result = result + sudokuMiddle + "\n"
+            result = result + SUDOKU_MIDDLE + "\n"
 
-    result = result + sudokuBottom
+    result = result + SUDOKU_BOTTOM
     return result
 
 
-# def printSudokuRow(row: Row):
+# def print_sudoku_row(row: Row):
 #     result:str = ""
 #     for i in range(0, 3):
 #         result = result + "┃ "
 #         for j in range(1, 4):
-#             result = result + printSudokuCell(row.get((i * 3) + j)) + " "
+#             result = result + print_sudoku_cell(row.get((i * 3) + j)) + " "
 #     result = result + "┃\n"
 #     return result
 
 
-def printSudokuRow(row: Row, y: int, highlight: list[FieldPointer]) -> str:
+def print_sudoku_row(row: Row, y: int, highlight: list[FieldPointer]) -> str:
     result: str = ""
     for x in range(1, 10):
         cell = row.get(x)
         position = (x, y)
         if x % 3 == 1:
             result = result + "┃"
-        result = result + printSudokuBeforeCell(cell, position, highlight)
-        result = result + printSudokuCell(cell, position, highlight)
+        result = result + print_sudoku_before_cell(position, highlight)
+        result = result + print_sudoku_cell(cell)
         if x % 3 == 0:
-            result = result + printSudokuAfterCell(cell, position, highlight)
+            result = result + print_sudoku_after_cell(position, highlight)
     result = result + "┃"
     return result
 
 
-def printSudokuBeforeCell(
-    cell: Cell, position: tuple[int, int], highlights: list[FieldPointer]
+def print_sudoku_before_cell(
+    position: tuple[int, int], highlights: list[FieldPointer]
 ) -> str:
     (x, y) = position
     value = None
@@ -54,9 +54,7 @@ def printSudokuBeforeCell(
         value = next(
             (
                 val
-                for val in [
-                    highlight.getAfter(cell, (x - 1, y)) for highlight in highlights
-                ]
+                for val in [highlight.get_after((x - 1, y)) for highlight in highlights]
                 if val is not None
             ),
             None,
@@ -65,9 +63,7 @@ def printSudokuBeforeCell(
         value = next(
             (
                 val
-                for val in [
-                    highlight.getBefore(cell, position) for highlight in highlights
-                ]
+                for val in [highlight.get_before(position) for highlight in highlights]
                 if val is not None
             ),
             None,
@@ -75,19 +71,17 @@ def printSudokuBeforeCell(
     return value if value is not None else " "
 
 
-def printSudokuCell(
-    cell: Cell, position: tuple[int, int], highlight: list[FieldPointer]
-) -> str:
+def print_sudoku_cell(cell: Cell) -> str:
     return " " if isinstance(cell, EmptyCell) else str(cell.value)
 
 
-def printSudokuAfterCell(
-    cell: Cell, position: tuple[int, int], highlights: list[FieldPointer]
+def print_sudoku_after_cell(
+    position: tuple[int, int], highlights: list[FieldPointer]
 ) -> str:
     return next(
         (
             val
-            for val in [highlight.getAfter(cell, position) for highlight in highlights]
+            for val in [highlight.get_after(position) for highlight in highlights]
             if val is not None
         ),
         " ",

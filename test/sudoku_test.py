@@ -103,10 +103,10 @@ class TestSudokuSet:
         sudoku = Sudoku.empty()
 
         # when
-        newSudoku = sudoku.set(3, 4, 8)
+        new_sudoku = sudoku.set(3, 4, 8)
 
         # then
-        assert newSudoku is not sudoku
+        assert new_sudoku is not sudoku
 
     def test_set_does_not_affect_old_sudoku(self):
         # given

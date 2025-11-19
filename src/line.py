@@ -27,10 +27,10 @@ class Line(CellCollection):
 
 
 class Row(Line):
-    def localToGlobal(self, x: int) -> tuple[int, int]:
+    def local_to_global(self, x: int) -> tuple[int, int]:
         return (x, self._index)
 
 
 class Column(Line):
-    def localToGlobal(self, y: int) -> tuple[int, int]:
+    def local_to_global(self, y: int) -> tuple[int, int]:
         return (self._index, y)

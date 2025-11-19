@@ -1,9 +1,9 @@
 from src.sudoku import Sudoku
 from src.sudokufinder import (
-    findCellsWithSingleOption,
-    findCellsWithUniqueNumberInBlocks,
-    findCellsWithUniqueNumberInColumns,
-    findCellsWithUniqueNumberInRows,
+    find_cells_with_single_option,
+    find_cells_with_unique_number_in_blocks,
+    find_cells_with_unique_number_in_columns,
+    find_cells_with_unique_number_in_rows,
 )
 
 
@@ -22,7 +22,7 @@ def test_finds_cell_with_only_one_possible_number():
         ]
     )
 
-    result = findCellsWithSingleOption(sudoku)
+    result = find_cells_with_single_option(sudoku)
 
     assert (5, 6) in result
 
@@ -42,7 +42,7 @@ def test_finds_cell_with_unique_value_in_row():
         ]
     )
 
-    result = findCellsWithUniqueNumberInRows(sudoku)
+    result = find_cells_with_unique_number_in_rows(sudoku)
 
     assert (3, 8) in result
 
@@ -62,7 +62,7 @@ def test_finds_cell_with_unique_value_in_column():
         ]
     )
 
-    result = findCellsWithUniqueNumberInColumns(sudoku)
+    result = find_cells_with_unique_number_in_columns(sudoku)
 
     assert (4, 7) in result
 
@@ -82,6 +82,6 @@ def test_finds_cell_with_unique_value_in_block():
         ]
     )
 
-    result = findCellsWithUniqueNumberInBlocks(sudoku)
+    result = find_cells_with_unique_number_in_blocks(sudoku)
 
     assert (5, 3) in result

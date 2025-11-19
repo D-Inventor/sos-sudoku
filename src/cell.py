@@ -27,7 +27,7 @@ class EmptyCell:
         return self
 
     @property
-    def possibleNumbers(self) -> list[int]:
+    def possible_numbers(self) -> list[int]:
         return [number for number in range(1, 10) if number not in self._eliminated]
 
     @staticmethod

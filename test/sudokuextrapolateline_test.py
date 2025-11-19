@@ -4,31 +4,31 @@ from src.sudoku import Sudoku
 from src.sudokuextrapolateline import (
     ColumnIntoBlockExtrapolation,
     RowIntoBlockExtrapolation,
-    eliminateFromExtrapolatedColumn,
-    eliminateFromExtrapolatedRow,
-    findExtrapolationsFromColumns,
-    findExtrapolationsFromRows,
-    findExtrapolationsFromSingleColumn,
-    findExtrapolationsFromSingleRow,
+    eliminate_from_extrapolated_column,
+    eliminate_from_extrapolated_row,
+    find_extrapolations_from_columns,
+    find_extrapolations_from_rows,
+    find_extrapolations_from_single_column,
+    find_extrapolations_from_single_row,
 )
 
 
 def test_finds_number_in_row_in_single_block():
     # given
-    emptyCellWithoutThree = EmptyCell.create().eliminate(3)
+    empty_cell_without_three = EmptyCell.create().eliminate(3)
     cells: dict[int, Cell] = dict()
     cells[1] = FullCell(5)
-    cells[4] = emptyCellWithoutThree
-    cells[5] = emptyCellWithoutThree
+    cells[4] = empty_cell_without_three
+    cells[5] = empty_cell_without_three
     cells[6] = FullCell(9)
-    cells[7] = emptyCellWithoutThree
+    cells[7] = empty_cell_without_three
     cells[8] = FullCell(7)
-    cells[9] = emptyCellWithoutThree
+    cells[9] = empty_cell_without_three
 
     row = Row(4, cells)
 
     # when
-    result = findExtrapolationsFromSingleRow(row)
+    result = find_extrapolations_from_single_row(row)
 
     # then
     assert RowIntoBlockExtrapolation(4, (1, 2), 3) in result
@@ -49,7 +49,7 @@ def test_remove_extrapolation_that_does_not_eliminate_any_options():
         ]
     )
 
-    result = findExtrapolationsFromRows(sudoku)
+    result = find_extrapolations_from_rows(sudoku)
 
     assert RowIntoBlockExtrapolation(4, (1, 2), 3) not in result
 
@@ -69,29 +69,29 @@ def test_eliminates_extrapolated_numbers():
         ]
     )
 
-    result = findExtrapolationsFromRows(sudoku)
+    result = find_extrapolations_from_rows(sudoku)
     for item in result:
-        sudoku = eliminateFromExtrapolatedRow(sudoku, item)
+        sudoku = eliminate_from_extrapolated_row(sudoku, item)
 
     assert not sudoku.get(8, 3).couldbe(8)
 
 
 def test_finds_number_in_column_in_single_block():
     # given
-    emptyCellWithoutThree = EmptyCell.create().eliminate(3)
+    empty_cell_without_three = EmptyCell.create().eliminate(3)
     cells: dict[int, Cell] = dict()
     cells[1] = FullCell(5)
-    cells[4] = emptyCellWithoutThree
-    cells[5] = emptyCellWithoutThree
+    cells[4] = empty_cell_without_three
+    cells[5] = empty_cell_without_three
     cells[6] = FullCell(9)
-    cells[7] = emptyCellWithoutThree
+    cells[7] = empty_cell_without_three
     cells[8] = FullCell(7)
-    cells[9] = emptyCellWithoutThree
+    cells[9] = empty_cell_without_three
 
     column = Column(4, cells)
 
     # when
-    result = findExtrapolationsFromSingleColumn(column)
+    result = find_extrapolations_from_single_column(column)
 
     # then
     assert ColumnIntoBlockExtrapolation(4, (2, 1), 3) in result
@@ -112,7 +112,7 @@ def test_remove_extrapolation_that_does_not_eliminate_any_options():
         ]
     )
 
-    result = findExtrapolationsFromColumns(sudoku)
+    result = find_extrapolations_from_columns(sudoku)
 
     assert ColumnIntoBlockExtrapolation(4, (2, 1), 3) not in result
 
@@ -132,8 +132,8 @@ def test_eliminates_extrapolated_numbers():
         ]
     )
 
-    result = findExtrapolationsFromColumns(sudoku)
+    result = find_extrapolations_from_columns(sudoku)
     for item in result:
-        sudoku = eliminateFromExtrapolatedColumn(sudoku, item)
+        sudoku = eliminate_from_extrapolated_column(sudoku, item)
 
     assert not sudoku.get(8, 3).couldbe(8)

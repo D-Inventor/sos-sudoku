@@ -16,7 +16,7 @@ dev = [
 pythonpath = "."
 
 [tool.ruff]
-lint.select = ["E", "F", "I", "B", "ANN"]
+lint.select = ["E", "F", "I", "B", "ANN", "N"]
 
 [tool.ruff.lint.per-file-ignores]
 "test/*" = ["F811", "ANN"]

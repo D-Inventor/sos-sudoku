@@ -1,6 +1,6 @@
 import pytest
 
-from src.sudokureader import sudokuLineToList
+from src.sudokureader import sudoku_line_to_list
 
 
 @pytest.mark.parametrize(
@@ -12,5 +12,5 @@ from src.sudokureader import sudokuLineToList
     ],
 )
 def test_read_string_as_line_of_numbers(input: str, expected: list[int | None]):
-    result = sudokuLineToList(input)
+    result = sudoku_line_to_list(input)
     assert result == expected

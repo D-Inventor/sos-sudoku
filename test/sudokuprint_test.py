@@ -1,6 +1,6 @@
 from src.higlights import FieldPointer
 from src.sudoku import Sudoku
-from src.sudokuprinter import printSudoku
+from src.sudokuprinter import print_sudoku
 
 
 def test_prints_empty_sudoku():
@@ -8,7 +8,7 @@ def test_prints_empty_sudoku():
     sudoku = Sudoku.empty()
 
     # when
-    result = printSudoku(sudoku, [])
+    result = print_sudoku(sudoku, [])
 
     # then
     expected = """┏━━━━━━━┳━━━━━━━┳━━━━━━━┓
@@ -44,7 +44,7 @@ def test_prints_full_sudoku():
     )
 
     # when
-    result = printSudoku(sudoku, [])
+    result = print_sudoku(sudoku, [])
 
     # then
     expected = """┏━━━━━━━┳━━━━━━━┳━━━━━━━┓
@@ -68,7 +68,7 @@ def test_prints_highlight():
     sudoku = Sudoku.empty()
 
     # when
-    result = printSudoku(sudoku, [FieldPointer((8, 2))])
+    result = print_sudoku(sudoku, [FieldPointer((8, 2))])
 
     # then
     expected = """┏━━━━━━━┳━━━━━━━┳━━━━━━━┓
@@ -92,7 +92,7 @@ def test_prints_highlight_at_block_edge():
     sudoku = Sudoku.empty()
 
     # when
-    result = printSudoku(sudoku, [FieldPointer((6, 2))])
+    result = print_sudoku(sudoku, [FieldPointer((6, 2))])
 
     # then
     expected = """┏━━━━━━━┳━━━━━━━┳━━━━━━━┓

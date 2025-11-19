@@ -2,49 +2,47 @@ from os import path
 
 from src.higlights import FieldPointer
 from src.sudokuextrapolateline import (
-    eliminateFromListOfExtrapolatedColumns,
-    eliminateFromListOfExtrapolatedRows,
-    findExtrapolationsFromColumns,
-    findExtrapolationsFromRows,
+    eliminate_from_list_of_extrapolated_columns,
+    eliminate_from_list_of_extrapolated_rows,
+    find_extrapolations_from_columns,
+    find_extrapolations_from_rows,
 )
 from src.sudokufinder import (
-    findCellsWithSingleOption,
-    findCellsWithUniqueNumberInBlocks,
-    findCellsWithUniqueNumberInColumns,
-    findCellsWithUniqueNumberInRows,
+    find_cells_with_single_option,
+    find_cells_with_unique_number_in_blocks,
+    find_cells_with_unique_number_in_columns,
+    find_cells_with_unique_number_in_rows,
 )
-from src.sudokuprinter import printSudoku
-from src.sudokureader import sudokuFromFile
+from src.sudokuprinter import print_sudoku
+from src.sudokureader import sudoku_from_file
 
 
 def entrypoint() -> None:
-    sudoku = sudokuFromFile(path.join("puzzles", "13.txt"))
+    sudoku = sudoku_from_file(path.join("puzzles", "13.txt"))
 
-    oldSudoku = None
-    newSudoku = sudoku
-    while oldSudoku is not newSudoku:
-        oldSudoku = newSudoku
-        extrapolations = findExtrapolationsFromRows(oldSudoku)
-        newSudoku = eliminateFromListOfExtrapolatedRows(newSudoku, extrapolations)
+    old_sudoku = None
+    new_sudoku = sudoku
+    while old_sudoku is not new_sudoku:
+        old_sudoku = new_sudoku
+        extrapolations = find_extrapolations_from_rows(old_sudoku)
+        new_sudoku = eliminate_from_list_of_extrapolated_rows(
+            new_sudoku, extrapolations
+        )
 
-        extrapolations = findExtrapolationsFromColumns(oldSudoku)
-        newSudoku = eliminateFromListOfExtrapolatedColumns(newSudoku, extrapolations)
+        extrapolations = find_extrapolations_from_columns(old_sudoku)
+        new_sudoku = eliminate_from_list_of_extrapolated_columns(
+            new_sudoku, extrapolations
+        )
 
     positions = set()
-    positions = positions | {position for position in findCellsWithSingleOption(sudoku)}
-    positions = positions | {
-        position for position in findCellsWithUniqueNumberInRows(sudoku)
-    }
-    positions = positions | {
-        position for position in findCellsWithUniqueNumberInColumns(sudoku)
-    }
-    positions = positions | {
-        position for position in findCellsWithUniqueNumberInBlocks(sudoku)
-    }
+    positions = positions | set(find_cells_with_single_option(sudoku))
+    positions = positions | set(find_cells_with_unique_number_in_rows(sudoku))
+    positions = positions | set(find_cells_with_unique_number_in_columns(sudoku))
+    positions = positions | set(find_cells_with_unique_number_in_blocks(sudoku))
 
     highlights = [FieldPointer(position) for position in positions]
 
-    output = printSudoku(sudoku, highlights)
+    output = print_sudoku(sudoku, highlights)
     print(output)
 
 

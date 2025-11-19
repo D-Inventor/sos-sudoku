@@ -5,19 +5,19 @@ from src.block import Block
 
 @dataclass(frozen=True)
 class BlockIntoRowExtrapolation:
-    rowIndex: int
-    blockIndex: tuple[int, int]
+    row_index: int
+    block_index: tuple[int, int]
     number: int
 
 
 @dataclass(frozen=True)
 class BlockIntoColumnExtrapolation:
-    columnIndex: int
-    blockIndex: tuple[int, int]
+    column_index: int
+    block_index: tuple[int, int]
     number: int
 
 
-def findExtrapolationsFromSingleBlock(
+def find_extrapolations_from_single_block(
     block: Block,
 ) -> list[BlockIntoRowExtrapolation | BlockIntoColumnExtrapolation]:
     return []
