@@ -46,3 +46,7 @@ def entrypoint() -> None:
 
     output = printSudoku(sudoku, highlights)
     print(output)
+
+
+if __name__ == "__main__":
+    entrypoint()
