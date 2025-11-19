@@ -3,7 +3,9 @@ from src.cellcollection import CellCollection
 
 
 class Block(CellCollection):
-    def __init__(self, offset: tuple[int, int], cells: dict[tuple[int, int], Cell]):
+    def __init__(
+        self, offset: tuple[int, int], cells: dict[tuple[int, int], Cell]
+    ) -> None:
         (self._offsetX, self._offsetY) = offset
         self._cells = cells
 
@@ -26,5 +28,5 @@ class Block(CellCollection):
         return result
 
     @property
-    def cells(self):
+    def cells(self) -> list[Cell]:
         return list(self._cells.values())

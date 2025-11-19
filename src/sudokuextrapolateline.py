@@ -1,6 +1,7 @@
-from dataclasses import dataclass
 import itertools
+from dataclasses import dataclass
 from typing import Callable
+
 from src.block import Block
 from src.cell import EmptyCell
 from src.line import Column, Line, Row
@@ -90,11 +91,13 @@ def getBlocksByNumberFromLine(
     return numbersAndBlocks
 
 
-def lineToBlockIndex(index: int):
+def lineToBlockIndex(index: int) -> int:
     return ((index - 1) // 3) + 1
 
 
-def willEliminateRowNumbersInBlock(block: Block, result: RowIntoBlockExtrapolation):
+def willEliminateRowNumbersInBlock(
+    block: Block, result: RowIntoBlockExtrapolation
+) -> bool:
     blockRow = block.globalToLocalRow(result.rowIndex)
     cellsToCheck = [
         block.get(x, y)
@@ -109,7 +112,7 @@ def willEliminateRowNumbersInBlock(block: Block, result: RowIntoBlockExtrapolati
 
 def willEliminateColumnNumbersInBlock(
     block: Block, result: ColumnIntoBlockExtrapolation
-):
+) -> bool:
     blockColumn = block.globalToLocalColumn(result.columnIndex)
     cellsToCheck = [
         block.get(x, y)
@@ -124,7 +127,7 @@ def willEliminateColumnNumbersInBlock(
 
 def eliminateFromListOfExtrapolatedRows(
     sudoku: Sudoku, extrapolations: list[RowIntoBlockExtrapolation]
-):
+) -> Sudoku:
     for extrapolation in extrapolations:
         sudoku = eliminateFromExtrapolatedRow(sudoku, extrapolation)
 
@@ -156,7 +159,7 @@ def eliminateFromExtrapolatedRow(
 
 def eliminateFromListOfExtrapolatedColumns(
     sudoku: Sudoku, extrapolations: list[ColumnIntoBlockExtrapolation]
-):
+) -> Sudoku:
     for extrapolation in extrapolations:
         sudoku = eliminateFromExtrapolatedColumn(sudoku, extrapolation)
 

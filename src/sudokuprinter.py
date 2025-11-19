@@ -1,4 +1,5 @@
 from src.higlights import FieldPointer
+
 from .cell import Cell, EmptyCell
 from .line import Row
 from .sudoku import Sudoku
@@ -29,7 +30,7 @@ def printSudoku(sudoku: Sudoku, highlights: list[FieldPointer]) -> str:
 #     return result
 
 
-def printSudokuRow(row: Row, y: int, highlight: list[FieldPointer]):
+def printSudokuRow(row: Row, y: int, highlight: list[FieldPointer]) -> str:
     result: str = ""
     for x in range(1, 10):
         cell = row.get(x)
@@ -46,7 +47,7 @@ def printSudokuRow(row: Row, y: int, highlight: list[FieldPointer]):
 
 def printSudokuBeforeCell(
     cell: Cell, position: tuple[int, int], highlights: list[FieldPointer]
-):
+) -> str:
     (x, y) = position
     value = None
     if x % 3 != 1:
@@ -82,7 +83,7 @@ def printSudokuCell(
 
 def printSudokuAfterCell(
     cell: Cell, position: tuple[int, int], highlights: list[FieldPointer]
-):
+) -> str:
     return next(
         (
             val

@@ -1,4 +1,5 @@
 import itertools
+
 from src.block import Block
 from src.cell import Cell, EmptyCell
 from src.line import Column, Line, Row
@@ -23,7 +24,7 @@ def findCellsWithUniqueNumberInRows(sudoku: Sudoku) -> list[tuple[int, int]]:
     ]
 
 
-def findCellsWithUniqueNumberInSingleRow(row: Row):
+def findCellsWithUniqueNumberInSingleRow(row: Row) -> list[tuple[int, int]]:
     return [row.localToGlobal(x) for x in findIndexesForUniqueNumbersInLine(row)]
 
 
@@ -35,7 +36,7 @@ def findCellsWithUniqueNumberInColumns(sudoku: Sudoku) -> list[tuple[int, int]]:
     ]
 
 
-def findCellsWithUniqueNumberInSingleColumn(column: Column):
+def findCellsWithUniqueNumberInSingleColumn(column: Column) -> list[tuple[int, int]]:
     return [column.localToGlobal(y) for y in findIndexesForUniqueNumbersInLine(column)]
 
 

@@ -14,5 +14,5 @@ def sudokuLineToList(line: str) -> list[int | None]:
     return [sudokuCharacterToNumber(x) for x in line]
 
 
-def sudokuCharacterToNumber(char: str):
+def sudokuCharacterToNumber(char: str) -> int | None:
     return int(char) if char.isdigit() else None

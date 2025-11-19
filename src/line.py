@@ -1,9 +1,10 @@
 from src.cellcollection import CellCollection
+
 from .cell import Cell, EmptyCell
 
 
 class Line(CellCollection):
-    def __init__(self, index: int, cells: dict[int, Cell]):
+    def __init__(self, index: int, cells: dict[int, Cell]) -> None:
         if index < 1 or index > 9:
             raise ValueError("Index must be a value between 1 and 9")
 
@@ -17,11 +18,11 @@ class Line(CellCollection):
         return self._cells[index] if index in self._cells else EmptyCell.create()
 
     @property
-    def cells(self):
+    def cells(self) -> list[Cell]:
         return list(self._cells.values())
 
     @property
-    def index(self):
+    def index(self) -> int:
         return self._index
 
 

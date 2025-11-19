@@ -9,6 +9,7 @@ def test_block_contains_number():
 
     assert block.contains(6)
 
+
 def test_block_does_not_contain_number():
     cells: dict[tuple[int, int], Cell] = {}
     cells[(2, 2)] = FullCell(6)

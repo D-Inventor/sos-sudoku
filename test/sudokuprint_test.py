@@ -26,19 +26,22 @@ def test_prints_empty_sudoku():
 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛"""
     assert result == expected
 
+
 def test_prints_full_sudoku():
-    #given
-    sudoku = Sudoku.fromarray([
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [4, 5, 6, 7, 8, 9, 1, 2, 3],
-        [7, 8, 9, 1, 2, 3, 4, 5, 6],
-        [2, 3, 4, 5, 6, 7, 8, 9, 1],
-        [5, 6, 7, 8, 9, 1, 2, 3, 4],
-        [8, 9, 1, 2, 3, 4, 5, 6, 7],
-        [3, 4, 5, 6, 7, 8, 9, 1, 2],
-        [6, 7, 8, 9, 1, 2, 3, 4, 5],
-        [9, 1, 2, 3, 4, 5, 6, 7, 8]
-    ])
+    # given
+    sudoku = Sudoku.fromarray(
+        [
+            [1, 2, 3, 4, 5, 6, 7, 8, 9],
+            [4, 5, 6, 7, 8, 9, 1, 2, 3],
+            [7, 8, 9, 1, 2, 3, 4, 5, 6],
+            [2, 3, 4, 5, 6, 7, 8, 9, 1],
+            [5, 6, 7, 8, 9, 1, 2, 3, 4],
+            [8, 9, 1, 2, 3, 4, 5, 6, 7],
+            [3, 4, 5, 6, 7, 8, 9, 1, 2],
+            [6, 7, 8, 9, 1, 2, 3, 4, 5],
+            [9, 1, 2, 3, 4, 5, 6, 7, 8],
+        ]
+    )
 
     # when
     result = printSudoku(sudoku, [])
@@ -58,6 +61,7 @@ def test_prints_full_sudoku():
 ┃ 9 1 2 ┃ 3 4 5 ┃ 6 7 8 ┃
 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛"""
     assert result == expected
+
 
 def test_prints_highlight():
     # given
@@ -81,6 +85,7 @@ def test_prints_highlight():
 ┃       ┃       ┃       ┃
 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┛"""
     assert result == expected
+
 
 def test_prints_highlight_at_block_edge():
     # given
